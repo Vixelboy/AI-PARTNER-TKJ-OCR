@@ -11,7 +11,7 @@ st.markdown("""<style>#MainMenu {visibility: hidden;} footer {visibility: hidden
 # --- KONFIGURASI AI (API KEY GEMINI IKBAL) ---
 API_KEY_IKBAL = "AIzaSyD90ywjHCFLSZPhMb4n0tjZZPSoHesyd5I"
 genai.configure(api_key=API_KEY_IKBAL)
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-1.5-flash-latest')
 
 # --- FUNGSI SUARA (TTS) ---
 def play_voice(text):
@@ -71,3 +71,4 @@ if prompt := st.chat_input("Tanya apa hari ini, Bal?"):
                 st.session_state.messages.append({"role": "assistant", "content": response.text})
         except Exception as e:
             st.error(f"Error pada sistem: {e}")
+
