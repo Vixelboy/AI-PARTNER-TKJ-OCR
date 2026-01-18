@@ -4,16 +4,13 @@ from PIL import Image
 from gtts import gTTS
 import base64
 
-# --- SETTING LAYOUT & HIDE MENU ---
 st.set_page_config(page_title="Guru TKJ AI", page_icon="💻")
 st.markdown("""<style>#MainMenu {visibility: hidden;} footer {visibility: hidden;} header {visibility: hidden;}</style>""", unsafe_allow_html=True)
 
-# --- KONFIGURASI AI (API KEY GEMINI IKBAL) ---
 API_KEY_IKBAL = "AIzaSyD90ywjHCFLSZPhMb4n0tjZZPSoHesyd5I"
 genai.configure(api_key=API_KEY_IKBAL)
 model = genai.GenerativeModel('gemini-1.5-flash-latest')
 
-# --- FUNGSI SUARA (TTS) ---
 def play_voice(text):
     try:
         clean_text = text[:300].replace('*', '').replace('#', '')
@@ -27,14 +24,12 @@ def play_voice(text):
     except:
         pass
 
-# --- TAMPILAN UTAMA ---
 st.title("🤖 Kelas Digital Pak Guru TKJ")
 st.info("Halo Bal! Chatbot Gemini kamu sudah aktif. Bisa baca Gambar, PDF, dan Suara.")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# --- SIDEBAR UPLOAD ---
 with st.sidebar:
     st.header("📁 Media & Dokumen")
     uploaded_file = st.file_uploader("Upload Gambar/File Materi", type=['png', 'jpg', 'jpeg', 'pdf', 'txt'])
@@ -42,12 +37,10 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# Menampilkan Riwayat Chat
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# --- INPUT CHAT ---
 if prompt := st.chat_input("Tanya apa hari ini, Bal?"):
     st.chat_message("user").markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -71,4 +64,5 @@ if prompt := st.chat_input("Tanya apa hari ini, Bal?"):
                 st.session_state.messages.append({"role": "assistant", "content": response.text})
         except Exception as e:
             st.error(f"Error pada sistem: {e}")
+
 
